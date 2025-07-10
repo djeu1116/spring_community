@@ -26,6 +26,8 @@ services:
       SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}?useSSL=false&allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      secret: ${JWT_SECRET}
+      expiration: ${JWT_EXPIRATION}
     depends_on:
        database:
          condition: service_healthy
