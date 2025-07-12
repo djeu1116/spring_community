@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   database:
     image: mysql:latest
@@ -7,13 +9,13 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
+    networks:
+      - community
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 10s
       timeout: 5s
-      retries: 3
-    networks:
-      - community
+      retries: 5
 
   application:
     container_name: backend
@@ -22,23 +24,18 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
+    depends_on:
+      database:
+        condition: service_healthy
     environment:
-      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
       SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
-      secret: ${JWT_SECRET}
-      expiration: ${JWT_EXPIRATION}
-    depends_on:
-       database:
-         condition: service_healthy
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRATION: ${JWT_EXPIRATION}
     networks:
       - community
 
 networks:
   community:
-
-
-
-
-
-

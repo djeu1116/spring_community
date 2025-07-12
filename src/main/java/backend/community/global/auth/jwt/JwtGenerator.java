@@ -16,8 +16,8 @@ public class JwtGenerator {
     private final JwtProperties jwtProperties;
 
     // .env에서 secret 값을 가져와서 키에 저장
-    public JwtGenerator(@Value("${JWT_SECRET}") String secretKey, JwtProperties jwtProperties) {
-        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+    public JwtGenerator(JwtProperties jwtProperties) {
+        byte[] keyBytes = Decoders.BASE64.decode(jwtProperties.getSecret());
         this.key = Keys.hmacShaKeyFor(keyBytes);
         this.jwtProperties = jwtProperties;
     }
