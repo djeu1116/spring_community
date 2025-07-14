@@ -7,4 +7,5 @@ import backend.community.domain.user.dto.response.UserLoginResponse;
 public interface UserService {
     void signUp(UserSignupRequest request);
     UserLoginResponse login(UserLoginRequest request);
+
 }

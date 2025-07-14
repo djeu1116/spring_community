@@ -1,7 +1,11 @@
 package backend.community.domain.user.dto.response;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
 public class UserLoginResponse {
-    // 서버가 로그인 성공 시 클라이언트에게 주는 응답
-    private String accessToken;
-    private String refreshToken;
+    private final String accessToken;
+    private final String refreshToken;
 }
